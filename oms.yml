@@ -2,15 +2,15 @@ oms: 1
 
 info:
   version: 1.0.0
-  title: Your microservice
-  description: Describe your microservice
+  title: IBM Watson Speech-to-Text
+  description: Transcribe audio file of human to speech to text.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 
 lifecycle:
   startup:
-    command: ['node', '/app/src/index.js']
+    command: ["node", "/app/src/index.js"]
 
 health:
   http:
@@ -18,18 +18,101 @@ health:
     port: 8080
 
 actions:
-  message:
-    help: Insert a "name" into simple greeting text phrase
+  transcribe:
+    help: Transcribe speech in an audio file to text.
     http:
       path: /
       method: post
       port: 8080
     arguments:
-      name:
-        help: The "name" to insert into the greeting text phrase.
+      contentType:
+        help: "The format (MIME type) of the audio. For more information about specifying an audio format, see **Audio formats (content types)** in the method description."
+        required: true
+        in: requestBody
         type: string
+      model:
+        help: The identifier of the model that is to be used for the recognition request.
         required: false
+        in: requestBody
+        default: en-US_BroadbandModel
+        type: enum
+        enum:
+          - ar-AR_BroadbandModel
+          - de-DE_BroadbandModel
+          - de-DE_NarrowbandModel
+          - en-GB_BroadbandModel
+          - en-GB_NarrowbandModel
+          - en-US_BroadbandModel
+          - en-US_NarrowbandModel
+          - en-US_ShortForm_NarrowbandModel
+          - es-AR_BroadbandModel
+          - es-AR_NarrowbandModel
+          - es-CL_BroadbandModel
+          - es-CL_NarrowbandModel
+          - es-CO_BroadbandModel
+          - es-ES_BroadbandModel
+          - es-ES_NarrowbandModel
+          - es-MX_BroadbandModel
+          - es-MX_NarrowbandModel
+          - es-PE_BroadbandModel
+          - es-PE_NarrowbandModel
+          - fr-FR_BroadbandModel
+          - fr-FR_NarrowbandModel
+          - ja-JP_BroadbandModel
+          - ja-JP_NarrowbandModel
+          - ko-KR_BroadbandModel
+          - ko-KR_NarrowbandModel
+          - pt-BR_BroadbandModel
+          - pt-BR_NarrowbandModel
+          - zh-CN_BroadbandModel
+          - zh-CN_NarrowbandModel
+      speakerLabels:
+        help: If true, the response includes labels that identify which words were spoken by which participants in a multi-person exchange. By default, the service returns no speaker labels. Setting speaker_labels to true forces the timestamps parameter to be true, regardless of whether you specify false for the parameter.
+        type: boolean
+        required: false
+        default: true
+        in: requestBody
+      profanityFilter:
+        help: If true, the service filters profanity from all output except for keyword results by replacing inappropriate words with a series of asterisks. Set the parameter to false to return results with no censoring. Applies to US English transcription only.
+        type: boolean
+        required: false
+        default: false
+        in: requestBody
+      smartFormatting:
+        help: "If true, the service converts dates, times, series of digits and numbers, phone numbers, currency values, and internet addresses into more readable, conventional representations in the final transcript of a recognition request. For US English, the service also converts certain keyword strings to punctuation symbols. By default, the service performs no smart formatting. Note: Applies to US English, Japanese, and Spanish transcription only."
+        type: boolean
+        required: false
+        default: true
+        in: requestBody
+      timestamps:
+        help: If true, the service returns time alignment for each word. By default, no timestamps are returned.
+        type: boolean
+        required: false
+        default: false
+        in: requestBody
+      audioMetrics:
+        help: If true, requests detailed information about the signal characteristics of the input audio. The service returns audio metrics with the final transcription results. By default, the service returns no audio metrics.
+        type: boolean
+        required: false
+        default: false
+        in: requestBody
+      redaction:
+        help:
+          "If true, the service redacts, or masks, numeric data from final transcripts. The feature redacts any number that has three or more consecutive digits by replacing each digit with an X character. It is intended to redact sensitive numeric data, such as credit card numbers. By default, the service performs no redaction.
+
+          When you enable redaction, the service automatically enables smart formatting, regardless of whether you explicitly disable that feature. To ensure maximum security, the service also disables keyword spotting (ignores the keywords and keywords_threshold parameters) and returns only a single final transcript (forces the max_alternatives parameter to be 1).
+
+          Note: Applies to US English, Japanese, and Korean transcription only."
+        type: boolean
+        required: false
+        default: false
         in: requestBody
     output:
       contentType: application/json
       type: map
+
+environment:
+  API_KEY:
+    required: true
+    type: string
+    help: "An IBM Cloud `API KEY`. Go to the Speech to Text page in the IBM Cloud Catalog: https://cloud.ibm.com/catalog/services/speech-to-text"
