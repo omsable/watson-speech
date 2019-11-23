@@ -10,10 +10,10 @@ script:
   - |
     output="$(npx oms run --silent transcribe \
       -a url=https://oms.hudson.dev/fixtures/speech.wav \
-      -a speakerLabels=false \
-      -a smartFormatting=false \
-      -e API_KEY=$API_KEY | jq -c .)"
-    if [ "$output" != '{"results":[{"alternatives":[{"confidence":0.99,"transcript":"thunderstorms could produce large hail isolated tornadoes and heavy rain "}],"final":true}],"result_index":0}' ] ; then echo "$output"; exit 1; fi
+      -a speakerLabels='false' \
+      -a smartFormatting='false' \
+      -e API_KEY=$API_KEY | jq '.results[0].alternatives[0].transcript')"
+    if [ "$output" != '"thunderstorms could produce large hail isolated tornadoes and heavy rain "' ] ; then echo "$output"; exit 1; fi
 env:
   global:
     secure: hbIS5l+a0s7G1yk7sJBv5+MV6P3zygIwGAVqjZFmUPxQNk/of9jNJegbTssFCFHDlcD7HqUaWgzQ2IN8NhAaqNj+zzvvJf6Vv6pmSbhjeTcADbhIf5LRrvjy7q59FFb5E0QT1QK05+zlnKavePu9VdBk1tzh2ivVXraNj/ntM+cgT6N5M3WvLIXVH2jkMq+WXNdsxM9p0//6WMuhUtJkXbM4aehBsAsfHYiYiets9pw4ZMmy5rD2oBFUopa+TB2bQLd8rKwjLRAF7n3IBF1SRGw3DOEQhfxUKZb1OrNRVavM98KvYpDnCXnH0aF2QMyLpitL6yZZeV7NG0W7bsf5ggMOKmXouLLZY2buGNI6zMTy6abn4t7Ltcbw1AlnjZqG+jNcZiFT3G4GxyGB3sl0llYNsJeU9DOywzmu9+9VlSh2aO7yEswK0abqsu4D8kUmQjd+LSM8U1d+lIomKI594RFGMAXABttKze7afnMNC6LWWRx4LhDNBMBR7U3FuY8GJ/Bsqzu6Q14WIFSYwKc4pPx3SsykpT7n+ETo2vld06EZhMoR0RWcNPrjxX8Zy/FG40aifPSPNpYE2f+R53EkRK4HBSCytD8xPEPpTiauF4fs4Evsagc145EDgiWHxKzfrtI4kVB+fWDhm8MCEw1htPQasyV4U7gPjjRlYKT+xE4=
