@@ -3,7 +3,7 @@ oms: 1
 info:
   version: 1.0.0
   title: IBM Watson Speech-to-Text
-  description: Transcribe audio file of human to speech to text.
+  description: Transcribe audio file of human speech to text.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
@@ -25,9 +25,15 @@ actions:
       method: post
       port: 8080
     arguments:
+      url:
+        help: A URL to a audio file to transcribe.
+        type: string
+        required: true
+        in: requestBody
       contentType:
         help: "The format (MIME type) of the audio. For more information about specifying an audio format, see **Audio formats (content types)** in the method description."
-        required: true
+        required: false
+        default: application/octet-stream
         in: requestBody
         type: string
       model:

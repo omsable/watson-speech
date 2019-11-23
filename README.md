@@ -1,6 +1,6 @@
 # _IBM Watson Speech-to-Text_ Open Microservice
 
-> Transcribe audio file of human to speech to text.
+> Transcribe audio file of human speech to text.
 
 [![Open Microservice Specification Version](https://img.shields.io/badge/Open%20Microservice-1.0-477bf3.svg)](https://openmicroservices.org) [![Open Microservices Spectrum Chat](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/open-microservices) [![Open Microservices Code of Conduct](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](https://github.com/oms-services/.github/blob/master/CODE_OF_CONDUCT.md) [![Open Microservices Commitzen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -36,7 +36,8 @@ Once you have the [oms-cli](https://github.com/microservices/oms) installed, you
 
 | Argument Name | Type | Required | Default | Description |
 |:------------- |:---- |:-------- |:--------|:----------- |
-| contentType | `string` | `true` | None | The format (MIME type) of the audio. For more information about specifying an audio format, see **Audio formats (content types)** in the method description. |
+| url | `string` | `true` | None | A URL to a audio file to transcribe. |
+| contentType | `string` | `false` | None | The format (MIME type) of the audio. For more information about specifying an audio format, see **Audio formats (content types)** in the method description. |
 | model | `enum` | `false` | None | The identifier of the model that is to be used for the recognition request. |
 | speakerLabels | `boolean` | `false` | None | If true, the response includes labels that identify which words were spoken by which participants in a multi-person exchange. By default, the service returns no speaker labels. Setting speaker_labels to true forces the timestamps parameter to be true, regardless of whether you specify false for the parameter. |
 | profanityFilter | `boolean` | `false` | None | If true, the service filters profanity from all output except for keyword results by replacing inappropriate words with a series of asterisks. Set the parameter to false to return results with no censoring. Applies to US English transcription only. |
@@ -48,6 +49,7 @@ Once you have the [oms-cli](https://github.com/microservices/oms) installed, you
 
 ``` shell
 oms run transcribe \ 
+    -a url='*****' \ 
     -a contentType='*****' \ 
     -a model='*****' \ 
     -a speakerLabels='*****' \ 

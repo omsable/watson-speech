@@ -1,8 +1,8 @@
 {
-  "name": "oms-nodejs",
+  "name": "oms-watson-speech",
   "private": true,
   "version": "0.0.1",
-  "description": "An Open Microservice template for Node.js",
+  "description": "An Open Microservice that transcribes audio of human speech to text.",
   "main": "src/index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
