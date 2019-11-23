@@ -12,7 +12,7 @@ script:
   - npx oms build
   - |
     output="$(npx oms run --silent transcribe \
-    	-a url=https://oms.hudson.dev/fixtures/speech.wav \
-	    -a speakerLabels=false \
-	    -a smartFormatting=false | jq -c .)"
+      -a url=https://oms.hudson.dev/fixtures/speech.wav \
+      -a speakerLabels=false \
+      -a smartFormatting=false | jq -c .)"
     if [ "$output" != '{"results":[{"alternatives":[{"confidence":0.99,"transcript":"thunderstorms could produce large hail isolated tornadoes and heavy rain "}],"final":true}],"result_index":0}' ] ; then echo "$output"; exit 1; fi
