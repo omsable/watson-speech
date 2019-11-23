@@ -31,7 +31,7 @@ actions:
         required: true
         in: requestBody
       contentType:
-        help: "The format (MIME type) of the audio. For more information about specifying an audio format, see **Audio formats (content types)** in the method description."
+        help: "The format (MIME type) of the audio. For more information about specifying an audio format, see **Audio formats (content types)** in the IBM docs: https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-audio-formats#audio-formats"
         required: false
         default: application/octet-stream
         in: requestBody
