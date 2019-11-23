@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - '12'
+  - "12"
 
 services:
   - docker
@@ -11,5 +11,8 @@ before_install:
 script:
   - npx oms build
   - |
-    output="$(npx oms run --silent message -a name="World" | jq -c .)"
-    if [ "$output" != '{"message":"Hello World"}' ] ; then echo "$output"; exit 1; fi
+    output="$(npx oms run --silent transcribe \
+    	-a url=https://oms.hudson.dev/fixtures/speech.wav \
+	    -a speakerLabels=false \
+	    -a smartFormatting=false | jq -c .)"
+    if [ "$output" != '{"results":[{"alternatives":[{"confidence":0.99,"transcript":"thunderstorms could produce large hail isolated tornadoes and heavy rain "}],"final":true}],"result_index":0}' ] ; then echo "$output"; exit 1; fi
